@@ -1,8 +1,8 @@
-from flask import Flask
+from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route("/")
-def hello():
+def hi():
     return "Hello World!"
 
 
@@ -25,6 +25,23 @@ def html_line():
             
             """
 
+@app.route("/html_file")
+def html_file():
+    return render_template("file.html")
+    
 
+@app.route("/hello/<string:name>")
+def hello(name):
+    return render_template("hello.html", people_name=name)
 
+# 사용자가 입력한 숫자를 받아서 세제곱 후 cube.html파일을 통해 응답
+# @app.route("/cube/<string:num>")
+# def cube(num):
+#     num = int(num)
+#     num=pow(num,3)
+#     return render_template("cube.html", num=num)
 
+@app.route("/cube/<int:num>")
+def cube(num):
+    result=pow(num,3)
+    return render_template("cube.html", result=result, num=num)
